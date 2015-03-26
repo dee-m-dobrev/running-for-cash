@@ -1,0 +1,112 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+    {% if user.movestoken == None %}
+        <div class="tile">
+            <a href="https://api.moves-app.com/oauth/v1/authorize?response_type=code&client_id=68D1ogxT33tbs850i2nITH1F7fqe4WU3&scope=activity">
+                <img src="../static/img/moves-logo.png" class="img-responsive center-block" style="width:128px;height:128px;margin-top:20px;margin-bottom:24px">
+            </a>
+            <p style="font-size:18px">
+                Connect GenkiCraft with
+                <a href="https://api.moves-app.com/oauth/v1/authorize?response_type=code&client_id=68D1ogxT33tbs850i2nITH1F7fqe4WU3&scope=activity">
+                    Moves
+                </a>
+            </p>
+        </div>
+    {% else %}
+        <div class="tile">
+            <img src="../static/img/icons/svg/compas.svg" class="img-responsive center-block" style="margin-top:20px;margin-bottom:24px">
+            {% if user.quest != None %}
+                <h3 class="tile-title">
+                    {% if user.quest_complete == False %}
+                        {% if user.quest['activity'] == 'walking' %} Walk {% endif %}
+                        {% if user.quest['activity'] == 'running' %} Run {% endif %}
+                        {% if user.quest['distance'] == '0' %} for {{ user.quest['duration'] }} minutes {% endif %}
+                        {% if user.quest['duration'] == '0' %}
+                            {{ user.quest['distance'] }}
+                            {% if user.quest['distance'] == '1' %} mile
+                            {% else %} miles
+                            {% endif %}
+                        {% endif %}
+                    {% else %}
+                        You have won {{ user.quest['reward'] }} genkicoins!
+                    {% endif %}
+                </h3>
+                <p style="font-size:18px">
+                    {% if user.quest_complete == False %}
+                        Completing this quest will reward you with {{ user.quest['reward'] }} genkicoins
+                    {% else %}
+                        Check back tomorrow for a new quest
+                    {% endif %}
+                </p>
+            {% else %}
+                <h3 class="tile-title">No new quests</h3>
+                <p style="font-size:18px">
+                    Check back next week
+                </p>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    <div class="row demo-tiles" style="padding-bottom:40px">
+
+        <div class="col-sm-4">
+            <div class="tile">
+                <img src="../static/img/icons/svg/clipboard.svg" class="img-responsive center-block" style="margin-top:20px;margin-bottom:24px">
+                <h3 class="tile-title">Progress</h3>
+                <p style="font-size:18px">
+                    {% if user.movestoken == None or user.quest == None %}
+                        No new quests
+                    {% else %}
+                        {% if user.quest['distance'] == '0' %}
+                            {% if user.quest_complete == False %}
+                                {{ user.quest_progress }} / {{ user.quest['duration'] }} minutes
+                            {% else %}
+                                {{ user.quest['duration'] }} / {{ user.quest['duration'] }} minutes
+                            {% endif %}
+                        {% endif %}
+                        {% if user.quest['duration'] == '0' %}
+                            {% if user.quest_complete == False %}
+                                {{ user.quest_progress }} / {{ user.quest['distance'] }}
+                            {% else %}
+                                {{ user.quest['distance'] }} / {{ user.quest['distance'] }}
+                            {% endif %}
+                            {% if user.quest['distance'] == '1' %}
+                                mile
+                            {% else %}
+                                miles
+                            {% endif %}
+                        {% endif %}
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="tile">
+                <img src="../static/img/icons/svg/gift-box.svg" class="img-responsive center-block" style="margin-top:20px;margin-bottom:24px">
+                <h3 class="tile-title">This week you've won</h3>
+                <p style="font-size:18px">
+                    {{ user.coins }} genkicoins
+                </p>
+            </div>
+        </div>
+
+        <div class="col-sm-4">
+            <div class="tile">
+                <img src="../static/img/icons/svg/loop.svg" class="img-responsive center-block" style="margin-top:20px;margin-bottom:24px">
+                <h3 class="tile-title">Difficulty</h3>
+                <p style="font-size:18px">
+                    {% if user.difficulty == 'beginner' %} Beginner
+                    {% elif user.difficulty == 'intermediate' %} Intermediate
+                    {% elif user.difficulty == 'advanced' %} Advanced
+                    {% endif %}
+                    (<a href="{{ url_for('difficulty') }}">change</a>)
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

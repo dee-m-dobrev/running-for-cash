@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="tile" style="text-align:left;padding-left:30px;padding-right:30px;padding-top:20px">
+        <p style="font-size:18px">Your current difficulty is <b>
+            {% if user.difficulty == 'beginner' %}Beginner{% endif %}
+            {% if user.difficulty == 'intermediate' %}Intermediate{% endif %}
+            {% if user.difficulty == 'advanced' %}Advanced{% endif %}
+        </b></p>
+
+        <p style="font-size:18px">If you change your difficulty, you will lose the coins you have earned so far this week</p>
+
+        <form method="post">
+            {{ form.hidden_tag() }}
+
+            <div class="row">
+                <div class="form-group col-xs-12">
+                    {% if user.difficulty == 'beginner' %}
+                        {% for subfield in form.difficulty_beg %}
+                            <tr>
+                                <td>{{ subfield }}</td>
+                                <td>{{ subfield.label(class="radio-inline", style="font-size:18px") }}</td>
+                            </tr>
+                            <br>
+                        {% endfor %}
+                    {% endif %}
+                    {% if user.difficulty == 'intermediate' %}
+                        {% for subfield in form.difficulty_int %}
+                            <tr>
+                                <td>{{ subfield }}</td>
+                                <td>{{ subfield.label(class="radio-inline", style="font-size:18px") }}</td>
+                            </tr>
+                            <br>
+                        {% endfor %}
+                    {% endif %}
+                    {% if user.difficulty == 'advanced' %}
+                        {% for subfield in form.difficulty_adv %}
+                            <tr>
+                                <td>{{ subfield }}</td>
+                                <td>{{ subfield.label(class="radio-inline", style="font-size:18px") }}</td>
+                            </tr>
+                            <br>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-xs-12">
+                    <button type="submit" class="btn btn-hg btn-primary">Save</button>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div style="padding-bottom:40px"></div>
+{% endblock %}

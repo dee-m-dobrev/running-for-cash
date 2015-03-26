@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="tile" style="text-align:left;padding-left:30px;padding-right:30px;padding-top:20px">
+        {% if success %}
+            <h5>Thank you for your message. We'll get back to you shortly.</h5>
+        {% else %}
+
+            {% for message in form.name.errors %}
+                <div class="flash" style="color:#E74C3C;font-size:18px">{{ message }}</div>
+            {% endfor %}
+
+            {% for message in form.email.errors %}
+                <div class="flash" style="color:#E74C3C;font-size:18px">{{ message }}</div>
+            {% endfor %}
+
+            {% for message in form.subject.errors %}
+                <div class="flash" style="color:#E74C3C;font-size:18px">{{ message }}</div>
+            {% endfor %}
+
+            {% for message in form.message.errors %}
+                <div class="flash" style="color:#E74C3C;font-size:18px">{{ message }}</div>
+            {% endfor %}
+
+            <form action="{{ url_for('contact') }}" method=post>
+                {{ form.hidden_tag() }}
+
+                <div class="row">
+                    <div class="form-group col-xs-12">
+                        {{ form.name.label(style="font-size:18px") }}
+                        {{ form.name(class="form-control", style="font-size:18px") }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-xs-12">
+                        {{ form.email.label(style="font-size:18px") }}
+                        {{ form.email(class="form-control", style="font-size:18px") }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-xs-12">
+                        {{ form.subject.label(style="font-size:18px") }}
+                        {{ form.subject(class="form-control", style="font-size:18px") }}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="form-group col-xs-12">
+                        {{ form.message.label(style="font-size:18px") }}
+                        {{ form.message(rows="4", class="form-control", style="font-size:18px") }}
+                    </div>
+                </div>
+
+                <h6></h6>
+                <div class="row">
+                    <div class="form-group col-xs-12">
+                        <button type="submit" class="btn btn-hg btn-primary">Send</button>
+                    </div>
+                </div>
+
+            </form>
+
+        {% endif %}
+    </div>
+    <div style="padding-bottom:40px"></div>
+{% endblock %}

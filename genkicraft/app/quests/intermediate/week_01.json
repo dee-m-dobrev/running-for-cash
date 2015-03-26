@@ -1,0 +1,6 @@
+{
+  "01": {"number": "01", "activity": "running", "duration": "0", "distance": "1", "reward": "20"},
+  "02": {"number": "02", "activity": "running", "duration": "0", "distance": "1", "reward": "20"},
+  "03": {"number": "03", "activity": "running", "duration": "0", "distance": "1", "reward": "20"},
+  "04": {"number": "04", "activity": "walking", "duration": "30", "distance": "0", "reward": "40"}
+}
